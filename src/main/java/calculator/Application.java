@@ -16,16 +16,30 @@ public class Application {
 }
 
 class StringCalculator {
-    public int add(String text){
-        if(text.isEmpty()){
+    public int add(String text) {
+        if (text == null || text.isEmpty()) {
             return 0;
         }
-        String[] tokens = text.split("[,:]");
-        int sum = 0;
-        for(int i = 0 ; i < tokens.length; i++){
-            sum += Integer.parseInt(tokens[i]);
+        String[] tokens;
+        if (text.startsWith("//") && text.contains("\\n")) {
+            // 커스텀 구분자 처리 로직 (위의 3단계 접근법)
+            int newlineIndex = text.indexOf("\\n");
+            String customDelimiter = text.substring(2, newlineIndex);
+            String numbersText = text.substring(newlineIndex + 2);
+            tokens = numbersText.split(customDelimiter);
+            System.out.println("Tokens: " + java.util.Arrays.toString(tokens));
+            
+        } else {
+            // 기본 구분자 처리 로직
+            tokens = text.split("[,:]");
+            System.out.println("Tokens: " + java.util.Arrays.toString(tokens));
         }
-
+        
+        // 합산 로직은 여기서 한 번만 실행!
+        int sum = 0;
+        for (String token : tokens) {
+            sum += Integer.parseInt(token);
+        }
         return sum;
     }
 }
