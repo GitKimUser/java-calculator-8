@@ -38,7 +38,12 @@ class StringCalculator {
         // 합산 로직은 여기서 한 번만 실행!
         int sum = 0;
         for (String token : tokens) {
-            sum += Integer.parseInt(token);
+            int number = Integer.parseInt(token);
+
+            if(number < 0) {
+                throw new IllegalArgumentException("음수는 입력할 수 없습니다.");
+            }
+            sum += number;
         }
         return sum;
     }
